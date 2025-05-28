@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stakeholder Virtual</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Stakeholder Virtual</h1>
+    <div>
+        <input type="text" id="pergunta" placeholder="Digite sua pergunta...">
+        <button id="enviar">Enviar</button>
+    </div>
+    <div id="respostas"></div>
+      <script>
+          $(document).ready(function() {
+              function enviarPergunta() {
+                  var pergunta = $('#pergunta').val();
+                  $.post('/pergunta', {pergunta: pergunta}, function(data) {
+                      $('#respostas').append('<p><strong>Pergunta:</strong> ' + pergunta + '</p>');
+                      $('#respostas').append('<p><strong>Resposta:</strong> ' + data.resposta + '</p>');
+                      $('#pergunta').val('');
+                  });
+              }
+
+              $('#enviar').click(enviarPergunta);
+
+              $('#pergunta').keypress(function(event) {
+                  if (event.which === 13) { // 13 é o código da tecla Enter
+                      event.preventDefault(); // Evita o envio do formulário
+                      enviarPergunta();
+                  }
+              });
+          });
+      </script>
+  </body>
+</html>
