@@ -12,3 +12,4 @@ if __name__ == "__main__":
     caminho = "requisitos.pdf"
     texto = extrair_texto_pdf(caminho)
     print(texto[:500])  # Exibe os primeiros 500 caracteres
+    
