@@ -3,7 +3,6 @@ from process_pdf import extrair_texto_pdf
 from chatbot import gerar_feedback, gerar_resposta
 from datetime import datetime
 import random
-import os
 
 app = Flask(__name__)
 app.secret_key = "um_segredo_aleatorio_para_sessoes"  # necessário para usar session

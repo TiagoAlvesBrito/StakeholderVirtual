@@ -28,7 +28,7 @@
     <h1>Stakeholder Virtual</h1>
     <div id="chat"></div>
 
-    <textarea id="pergunta" rows="3" placeholder="Digite sua pergunta"></textarea>
+    <textarea id="pergunta" rows="3" placeholder="Digite sua pergunta (Shift+Enter para nova linha)"></textarea>
     <br>
     <button id="enviar">Enviar</button>
 
@@ -36,6 +36,11 @@
     $(function() {
         function escapar(texto){
             return $('<div/>').text(texto).html();
+        }
+
+        function scrollParaFinal() {
+            let chat = document.getElementById("chat");
+            chat.scrollTop = chat.scrollHeight;
         }
 
         function enviar(){
@@ -50,7 +55,13 @@
                 html += '<div class="mensagem resposta">Resposta: ' + escapar(data.resposta) + '</div>';
                 html += '<div class="meta">Data e Hora: ' + escapar(data.data_hora) + '</div>';
                 html += '<hr>';
-                $('#chat').prepend(html);
+                
+                // AGORA É append → mensagens novas vão para baixo
+                $('#chat').append(html);
+
+                // mensagens no final, como WhatsApp
+                scrollParaFinal();
+
                 $('#pergunta').val('').focus();
             })
             .fail(function(xhr, status, err){
@@ -63,6 +74,7 @@
         }
 
         $('#enviar').on('click', enviar);
+        
         $('#pergunta').on('keydown', function(e){
             if (e.key === 'Enter' && !e.shiftKey){
                 e.preventDefault();
